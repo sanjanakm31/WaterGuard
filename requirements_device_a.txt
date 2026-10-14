@@ -1,0 +1,5 @@
+# Same verified framework versions as the original project; no capture/evidence tools.
+cryptography==46.0.0
+fastapi==0.141.1
+uvicorn==0.52.4
+pymodbus==3.15.0

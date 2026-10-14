@@ -1,0 +1,20 @@
+# WaterGuard -- Python dependencies
+#
+# Install with:  pip install -r requirements.txt
+#
+# Core industrial-protocol simulation
+pymodbus==3.15.0
+
+# Cryptography (HMAC-SHA256 uses stdlib hmac/hashlib; this is for AES-256-GCM)
+cryptography==46.0.0
+
+# Dashboard backend
+fastapi==0.141.1
+uvicorn[standard]==0.52.4
+
+# Programmatic PCAP analysis (requires
+# tshark/Wireshark to also be installed at the OS level -- see README.md)
+pyshark==0.6
+
+# Testing
+pytest==8.4.2

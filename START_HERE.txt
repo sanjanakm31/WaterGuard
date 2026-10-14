@@ -1,0 +1,56 @@
+WATERGUARD PRESENTATION EDITION v3
+
+IF YOU ALREADY HAVE WaterGuard_Presentation_v3 (1):
+Close the old launcher after it has stopped. Extract this updated ZIP anywhere.
+Open its waterguard folder and double-click FIX_WINDOWS_STATUS_AND_EXPORT.bat.
+It updates your existing Downloads/WaterGuard_Presentation_v3 (1)/waterguard
+code, makes backups, and leaves keys, evidence, and Python environments intact.
+Then reopen START_WINDOWS_OPERATIONS.bat from that EXISTING project folder.
+Run verification again, then start WaterGuard. The expanded Windows suite has
+49 cases; use the actual result printed on your computer.
+If the export button is troublesome, double-click EXPORT_UBUNTU_CLIENT.bat
+in your existing project folder. It prints errors or opens the exported ZIP's
+containing folder on success.
+
+WINDOWS: extract the new ZIP into a new folder. Open waterguard and
+double-click START_WINDOWS_OPERATIONS.bat. Your previous project stays intact.
+The launcher tries your already verified Python environment automatically.
+
+1. Choose Ubuntu VM + Windows.
+2. Enter today's Ubuntu BRIDGED IPv4 address (previously 192.168.0.190).
+3. Detect adapters. Select Wi-Fi + loopback (previously 5,9).
+4. Click Allow this VM through firewall; accept the Windows administrator prompt.
+5. Click Verify this installation before presenting. Check the actual result.
+6. Click Start WaterGuard. Open https://localhost:8443/ on Windows.
+7. Export Ubuntu client ZIP. Copy ONLY Device_A_Only.zip to Ubuntu.
+8. Extract it in Ubuntu. Open waterguard-device-a > Open in Terminal.
+9. Type: bash START_DEVICE_A.sh
+10. In its browser, connect to today's WINDOWS Wi-Fi IPv4 address.
+11. Use the GUI forms and demonstrations. Show proof on the WINDOWS localhost dashboard.
+12. Stop safely using the Windows launcher; wait for finalization.
+
+FULL BEGINNER ACTION / SHOW / SAY SCRIPT:
+Double-click ui/guide.html, or click Presentation guide in the dashboard.
+
+ONE-LAPTOP PRACTICE:
+Choose One-laptop practice in the Windows launcher, start WaterGuard,
+click Open practice operator, and connect to 127.0.0.1 in its setup screen.
+This is practice; it does not substitute for your professor's VM demonstration.
+
+WHAT IS INCLUDED:
+All ten agreed UI/presentation additions; original core/CLI; tests; role-only
+Ubuntu package; encryption/decryption viewer; read-only SQLite explorer;
+one-bit tamper test on a COPY; measured results; startup and presentation guide.
+
+WHAT STILL DEPENDS ON YOUR COMPUTER:
+Your working Windows Python 3.12, Wireshark/Npcap installation, the existing
+Ubuntu VM and its working bridged network, correct IPs, and synchronized clocks.
+If dependencies are absent, first-time setup needs internet. Extracting a ZIP
+cannot automatically supply your network driver or repair VirtualBox.
+
+READ VERIFICATION_REPORT.md for what was tested in this release and what must
+be verified locally. No universal zero false-positive or zero-error guarantee.
+
+Do not run the old project and new project simultaneously on the same ports.
+Keep this lab ZIP private: it contains your lab credentials. The Ubuntu client
+package excludes evidence keys; older Ubuntu files/backups may still hold them.

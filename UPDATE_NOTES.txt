@@ -1,0 +1,47 @@
+WaterGuard GUI v3 update - 2026-10-09
+
+All ten agreed GUI/presentation additions are implemented; see FEATURES_V3.md.
+Use START_WINDOWS_OPERATIONS.bat, not the old automatic sample-traffic launcher,
+for the new application presentation. Use ui/guide.html for the full script.
+
+Core authorization, freshness, HMAC, atomic nonce, register-access and policy
+checks remain in their original order. The gateway now records the actual
+check trace and command snapshot in the encrypted evidence payload.
+
+Forwarding/internal failures are ERROR, distinct from a confirmed policy BLOCK.
+The native Modbus CLI and GUI require a genuine expected protocol exception;
+a timeout alone is never classified as a successful security block.
+
+A permanent argparse literal-percent fix is included for Python 3.14.
+Offline capture analysis now shares the live TCP stream reassembler to avoid
+misclassifying segmentation/retransmissions as malformed requests or replay.
+
+Device A runs with command credentials only. The export ZIP excludes evidence
+keys and server components. Older copies already on Ubuntu must be accounted
+for separately; the new exporter does not erase historical files.
+
+The new master ZIP contains no generated evidence, TLS private certificate
+files, virtual environments, or developer fixture outputs. Runtime directories
+are generated on startup. The supplied lab secrets are retained for continuity.
+
+Current verification results are in VERIFICATION_REPORT.md. Earlier audits and
+synopsis mappings are historical references under docs/previous_release.
+
+Verification correction, 2026-10-09: the old unexpected-error regression test
+now expects ERROR in both the gateway response and stored evidence, matching
+the documented v3 behavior. It also checks the internal stage and that this
+deliberately injected pre-processing failure causes no controller writes.
+No application behavior, credentials, or launcher settings were changed.
+
+Windows live-status correction, 2026-10-09:
+- Closed unique temporary snapshots, bounded replacement retries, and visible
+  nonfatal telemetry errors prevent a Windows snapshot lock from stopping the
+  command gateway. Stale status remains unknown in System health.
+- Client export runs in a worker; progress and errors appear in the launcher,
+  dialogs belong to that window, and success opens the containing folder.
+- EXPORT_UBUNTU_CLIENT.bat creates the same role-only ZIP directly.
+- Seven new runtime regressions include a Windows-only actual reader-lock test.
+- FIX_WINDOWS_STATUS_AND_EXPORT.bat updates the known existing installation
+  with backups, preserving .env, evidence, and installed environments.
+- Core command validation, encryption, authorized-source rules, and firewall
+  behavior have not been changed by this correction.

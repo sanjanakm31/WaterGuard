@@ -1,0 +1,125 @@
+WATERGUARD - OCTOBER 6 UPDATE NOTES
+
+INSTALLATION
+The ZIP is a full project, with all changes already applied. Extract into a new
+folder and follow START_HERE.txt. The links in the earlier chat were references
+to your existing source files, not files that you had to replace.
+
+WHY THESE CHANGES
+1. Dependency installation: original requirements.txt already contained all
+   Python libraries. Added a checker and a setup-only script; the normal setup
+   now checks TShark/Npcap access and PyShark parsing before launching.
+2. Live detection: a PyShark monitor observes live traffic and writes encrypted
+   ALERT events, separately from the gateway's actual ALLOW/BLOCK decisions.
+   It handles fragmented/out-of-order WCP packets and avoids treating a TCP
+   retransmission within one stream as a repeated command on a new connection.
+3. Remote bypass: controller defaults to 127.0.0.1. In the two-computer layout,
+   gateway and controller share the trusted computer, and a remote attacker
+   cannot connect directly to the controller's port. This is not isolation
+   against malicious programs already running on the trusted computer.
+4. Benchmarking: matched safe writes are measured directly and via the gateway;
+   five attack workloads are measured; exact returned event IDs select internal
+   timings so unrelated traffic/ALERTs do not contaminate samples. Transport or
+   controller failures are reported separately from security false positives.
+5. Timing: gateway WCP timing starts after complete message receipt. Validation
+   and Modbus forwarding times are separately recorded. Client RTT includes
+   evidence encryption/storage. Neither is labelled pure CPU time.
+6. Startup testing: tolerate legitimate chlorine decay during a slow Windows
+   controller startup instead of requiring an exact unchanged chlorine value.
+
+CURRENT VERIFICATION, PERFORMED DURING THIS UPDATE
+- Python compilation of the project: PASS.
+- Linux shell script syntax: PASS.
+- Eight new unittest regression cases: PASS.
+- Original core pipeline demonstration: PASS, all nine attack scenario groups.
+- Only three intended writes reached the in-memory test controller.
+- Evidence before tampering: 18 intact, zero tampered.
+- Evidence after deliberate tampering: 17 intact, one tampered.
+- Installation checker correctly reports unavailable dependencies and exits
+  nonzero. This is an expected environment diagnosis, not a successful full
+  installation or proof of Windows compatibility.
+
+NOT EXECUTED IN THE PREPARATION ENVIRONMENT
+- Real PyModbus controller integration.
+- FastAPI/Uvicorn HTTPS startup after these changes.
+- Actual TShark/PyShark live capture integration or Windows/Npcap integration.
+- A two-physical-device demonstration and real performance measurements.
+Required packages/executables were unavailable. No test result or timing for
+those integrations has been invented. The setup script runs the supplied
+pytest suite and a one-second real capture/parser check on the installed PC.
+Live alert timing/classification on your actual adapters still needs a run.
+
+ORIGINAL COVERAGE QUESTION (BEFORE THIS UPDATE)
+There is no objective exact percentage in the professor's rubric. Using the
+13 functional bullets in the synopsis with equal weights, 10 implemented
+items and three partial matches scored at half credit gives:
+(10 + 3 x 0.5) / 13 x 100 = 88.46%, approximately 88.5% code coverage of those
+requirements under this audit convention. The partial matches were live
+PyShark detection, enforcing the compulsory gateway route in deployment, and
+the complete benchmark methodology. This is NOT an official grade, test
+coverage percentage, or a claim that 88.5% of the system was runtime-verified.
+No new 100% claim is made without the actual installation and demonstration.
+
+SECURITY BOUNDARIES RETAINED
+WCP uses authentication, not transport encryption. Native Modbus is confined
+to the trusted controller connection. AES protects evidence payloads/exports;
+HTTPS protects the browser connection. Searchable database metadata remains
+readable. Per-record tamper detection does not establish deletion-proof history.
+Live capture observes traffic; it is not a network interception mechanism and
+cannot withdraw a packet already sent. Gateway validation supplies prevention.
+Chlorine decay and flow drift remain part of the original toy process model.
+
+FILE PLACEMENT
+Every file below is already at its correct relative path under waterguard/.
+No manual copying is needed. Original .env keys and requirements.txt were kept.
+Runtime databases, logs, old captures, certificates, virtual environments and
+Python bytecode were excluded from this clean ZIP.
+
+NEW FILES
+  START_HERE.txt
+  capture/live_monitor.py
+  setup_only_windows.bat
+  tests/test_update_regressions.py
+  tools/check_environment.py
+  UPDATE_NOTES.txt
+
+UPDATED EXISTING FILES
+  AUDIT_REPORT.md
+  README.md
+  SYNOPSIS_COMPLIANCE_MATRIX.md
+  VERIFICATION_REPORT.md
+  benchmarking/benchmark_gateway.py
+  capture/managed_capture.py
+  capture/pcap_analyzer.py
+  controller/device_b_controller.py
+  dashboard/app.py
+  gateway/waterguard_gateway.py
+  run_waterguard.py
+  setup_linux.sh
+  setup_windows.bat
+  shared/config.py
+  shared/crypto_utils.py
+  tests/test_real_stack.py
+
+COMMANDS FOR A LATER CHECK (INSIDE THE ACTIVATED PROJECT ENVIRONMENT)
+  python -m tools.check_environment --capture-test
+  python -m pytest -q
+  python -m unittest discover -s tests -p test_update_regressions.py -v
+
+Benchmark only with the real controller/gateway running, on the trusted host:
+  python -m benchmarking.benchmark_gateway --iterations 100
+The local identity must be authorized. The report is data/benchmark_report.json.
+Do not present timings obtained using LoopbackTestForwarder as real Modbus
+performance. Do not run run_local_pipeline_demo.py over evidence you want to
+preserve: that original proof harness intentionally resets its local evidence DB.
+
+OFFICIAL INSTALLATION REFERENCES
+https://www.wireshark.org/docs/wsug_html_chunked/ChBuildInstallWinInstall
+https://www.python.org/downloads/release/python-31210/
+https://www.python.org/downloads/latest/pymanager/
+WINDOWS SQLITE HANDLE FIX
+-------------------------
+Evidence-store operations now close every SQLite connection explicitly after
+commit/rollback.  Python's sqlite3 connection context manager does not close
+the underlying handle by itself; on Windows that kept temporary test databases
+locked during cleanup.  A regression test now verifies the lifecycle directly.
